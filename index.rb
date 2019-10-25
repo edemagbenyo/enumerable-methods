@@ -5,7 +5,7 @@ module Enumerable
     arr = to_a
     arr.to_enum unless block_given?
     n = 0
-    while self.length > n
+    while arr.length > n
       yield(arr[n])
       n += 1
     end
@@ -15,7 +15,7 @@ module Enumerable
     arr = to_a
     return arr.to_enum unless block_given?
     n = 0
-    while self.length > n
+    while arr.length > n
       yield(arr[n], n)
       n += 1
     end
@@ -28,7 +28,7 @@ module Enumerable
       res << v if yield(v) == true
     end
     res
-	end
+  end
 	
   def my_all?
     check = true
@@ -48,7 +48,7 @@ module Enumerable
       my_any?{ |obj| obj }
     end
     check
-	end
+  end
 	
   def my_none?
     check = true
@@ -58,7 +58,7 @@ module Enumerable
       my_none{ |obj| obj}
     end
     check
-	end
+  end
 	
   def my_count (*arg)
     count = 0
@@ -71,7 +71,7 @@ module Enumerable
     end
       my_each { |i| count += 1 if yield(i) }
     count
-	end
+  end
 	
   def my_map(&proc)
     return arr.to_enum unless block_given?
@@ -90,9 +90,9 @@ module Enumerable
        end
      end
      acc
-	end
+  end
 	
   def multiply_els(arr)
     my_inject(arr){ |i,j| i *j }
-	end
+  end
 end
