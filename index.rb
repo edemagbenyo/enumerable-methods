@@ -9,22 +9,24 @@ module Enumerable
       yield(arr[n])
       n += 1
     end
-	end
-	
+  end
+
   def my_each_with_index
     arr = to_a
-    return arr.to_enum unless block_given?
+		return arr.to_enum unless block_given?
+		
     n = 0
     while arr.length > n
       yield(arr[n], n)
       n += 1
     end
-	end
-	
+  end
+
   def my_select
-    return self.to_enum unless block_given?
+		return to_enum unless block_given?
+
     res = []
-    self.my_each do |v|
+    my_each do |v|
       res << v if yield(v) == true
     end
     res
@@ -33,19 +35,19 @@ module Enumerable
   def my_all?
     check = true
     if block_given?
-      self.my_each{ |i| check = false unless yield(i)}
+      my_each { |i| check = false unless yield(i) }
     else
-      self.my_all?{ |obj| obj }
+      my_all? { |obj| obj }
     end
     check
-	end
+  end
 	
   def my_any?
     check = false
     if block_given?
-      my_each{ |i| check = true if yield(i) }
+      my_each { |i| check = true if yield(i) }
     else
-      my_any?{ |obj| obj }
+      my_any? { |obj| obj }
     end
     check
   end
@@ -53,9 +55,9 @@ module Enumerable
   def my_none?
     check = true
     if block_given? 
-      my_each{ |i| check = false if yield(i) }
+      my_each { |i| check = false if yield(i) }
     else
-      my_none{ |obj| obj}
+      my_none { |obj| obj}
     end
     check
   end
@@ -93,6 +95,6 @@ module Enumerable
   end
 	
   def multiply_els(arr)
-    my_inject(arr){ |i,j| i *j }
+    arr { |i,j| i *j }
   end
 end
