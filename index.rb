@@ -31,7 +31,7 @@ module Enumerable
     end
     res
   end
-	
+
   def my_all?
     check = true
     if block_given?
@@ -74,29 +74,29 @@ module Enumerable
     my_each { |i| count += 1 if yield(i) }
     count
   end
-	
-  def my_map(&proc)
-		return arr.to_enum unless block_given?
+
+	def my_map(&proc)
+    return arr.to_enum unless block_given?
 
     result = []
     my_each { |i| result << proc.call(i) }
     result
   end
-	
+
   def my_inject(init = nil)
-		n = 0
-		arr = to_a
-     acc = init ? init + arr[0] : arr[0]
-     if block_given?
-       while arr.length - 1 > n
+    n = 0
+    arr = to_a
+    acc = init ? init + arr[0] : arr[0]
+    if block_given?
+      while arr.length - 1 > n
          acc = yield(acc, arr[n + 1])
          n += 1
-       end
-     end
-     acc
+      end
+    end
+    acc
   end
 
   def multiply_els(arr)
-    arr { |i,j| i * j }
+    arr { |i, j| i * j }
   end
 end
