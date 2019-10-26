@@ -13,8 +13,8 @@ module Enumerable
 
   def my_each_with_index
     arr = to_a
-		return arr.to_enum unless block_given?
-		
+    return arr.to_enum unless block_given?
+
     n = 0
     while arr.length > n
       yield(arr[n], n)
@@ -23,7 +23,7 @@ module Enumerable
   end
 
   def my_select
-		return to_enum unless block_given?
+    return to_enum unless block_given?
 
     res = []
     my_each do |v|
@@ -41,7 +41,7 @@ module Enumerable
     end
     check
   end
-	
+
   def my_any?
     check = false
     if block_given?
@@ -51,18 +51,18 @@ module Enumerable
     end
     check
   end
-	
+
   def my_none?
     check = true
-    if block_given? 
+    if block_given?
       my_each { |i| check = false if yield(i) }
     else
-      my_none { |obj| obj}
+      my_none { |obj| obj }
     end
     check
   end
-	
-  def my_count (*arg)
+
+  def my_count(*arg)
     count = 0
     unless block_given?
       if arg.empty?
@@ -71,30 +71,32 @@ module Enumerable
         my_count { |i| arg[0] == i }
       end
     end
-      my_each { |i| count += 1 if yield(i) }
+    my_each { |i| count += 1 if yield(i) }
     count
   end
 	
   def my_map(&proc)
-    return arr.to_enum unless block_given?
+		return arr.to_enum unless block_given?
+
     result = []
     my_each { |i| result << proc.call(i) }
     result
-	end
+  end
 	
   def my_inject(init = nil)
-     n = 0
+		n = 0
+		arr = to_a
      acc = init ? init + arr[0] : arr[0]
      if block_given?
-       while arr.length-1 > n
-         acc = yield(acc, arr[n+1])
+       while arr.length - 1 > n
+         acc = yield(acc, arr[n + 1])
          n += 1
        end
      end
      acc
   end
-	
+
   def multiply_els(arr)
-    arr { |i,j| i *j }
+    arr { |i,j| i * j }
   end
 end
