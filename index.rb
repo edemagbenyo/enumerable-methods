@@ -75,7 +75,7 @@ module Enumerable
     count
   end
 
-	def my_map(&proc)
+  def my_map(&proc)
     return arr.to_enum unless block_given?
 
     result = []
@@ -89,14 +89,14 @@ module Enumerable
     acc = init ? init + arr[0] : arr[0]
     if block_given?
       while arr.length - 1 > n
-         acc = yield(acc, arr[n + 1])
-         n += 1
+        acc = yield(acc, arr[n + 1])
+        n += 1
       end
     end
     acc
   end
 
   def multiply_els(arr)
-    arr { |i, j| i * j }
+    arr.my_inject { |i, j| i * j }
   end
 end
