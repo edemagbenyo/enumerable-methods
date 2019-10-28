@@ -3,7 +3,7 @@
 module Enumerable
   def my_each
     arr = to_a
-    arr.to_enum unless block_given?
+    return arr.to_enum unless block_given?
     n = 0
     while arr.length > n
       yield(arr[n])
