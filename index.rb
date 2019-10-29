@@ -73,7 +73,7 @@ module Enumerable
       my_any? { |obj| obj }
     else
       my_any?(args[0]) { |obj| obj }
-    end    
+    end
   end
 
   def my_none?(*args)
@@ -132,8 +132,8 @@ module Enumerable
       end
       return acc
     end
-    acc = args[0] ? args[0] : 0
-    my_each_with_index { |_,i| acc = yield(acc, arr[i]) }
+    acc = args[0] || 0
+    my_each_with_index { |_, i| acc = yield(acc, arr[i]) }
     return acc
   end
 end
