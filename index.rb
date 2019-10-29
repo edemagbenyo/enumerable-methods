@@ -4,6 +4,7 @@ module Enumerable
   def my_each
     arr = to_a
     return arr.to_enum unless block_given?
+
     n = 0
     while arr.length > n
       yield(arr[n])
@@ -32,39 +33,78 @@ module Enumerable
     res
   end
 
-  def my_all?
+  def my_all?(*args)
     check = true
     if block_given?
-      my_each { |i| check = false unless yield(i) }
+      if args.empty?
+        my_each { |i| check = false unless yield(i) }
+      elsif args[0].is_a?(Class)
+        my_each { |i| check = false unless yield(i).class == args[0] }
+      elsif args[0].is_a?(Regexp)
+        my_each { |i| check = false unless (args[0]).match(yield(i)) }
+      else
+        my_each { |i| check = false unless yield(i) == args[0] }
+      end
+      return check
     else
-      my_all? { |obj| obj }
+      if args.empty?
+        my_all? { |obj| obj }
+      else
+        my_all?(args[0]) { |obj| obj }
+      end
     end
-    check
+    
   end
 
-  def my_any?
+  def my_any?(*args)
     check = false
     if block_given?
-      my_each { |i| check = true if yield(i) }
+      if args.empty?
+        my_each { |i| check = true if yield(i) }
+      elsif args[0].is_a(Class)
+        my_each { |i| check = true if yield(i).class == args[0] }
+      elsif args[0].is_a(Regexp)
+        my_each { |i| check = true if yield(i).match(args[0]) }
+      else
+        my_each { |i| check = true if yield(i) == args[0] }
+      end
+      return check
     else
-      my_any? { |obj| obj }
+      if args.empty?
+        my_any? { |obj| obj }
+      else
+        my_any?(args[0]) { |obj| obj }
+      end
     end
-    check
+    
   end
 
-  def my_none?
+  def my_none?(*args)
     check = true
     if block_given?
-      my_each { |i| check = false if yield(i) }
+      if args.empty?
+        my_each { |i| check = false if yield(i) }
+      elsif args[0].is_a(Class)
+        my_each { |i| check = false if yield(i).class == args[0] }
+      elsif args[0].is_a(Regexp)
+        my_each { |i| check = false if yield(i).match(args[0]) }
+      else
+        my_each { |i| check = false if yield(i) == args[0] }
+      end
+      return check
     else
-      my_none { |obj| obj }
+      if args.empty?
+        my_none? { |obj| obj }
+      else
+        my_none?(args[0]) { |obj| obj }
+      end
     end
-    check
   end
 
   def my_count(*arg)
     count = 0
     unless block_given?
+
       if arg.empty?
         my_count { |i| i }
       else
@@ -76,6 +116,7 @@ module Enumerable
   end
 
   def my_map(&proc)
+    arr = to_a
     return arr.to_enum unless block_given?
 
     result = []
@@ -83,17 +124,24 @@ module Enumerable
     result
   end
 
-  def my_inject(init = nil)
-    n = 0
+  def my_inject(*args)
     arr = to_a
-    acc = init ? init + arr[0] : arr[0]
-    if block_given?
-      while arr.length - 1 > n
-        acc = yield(acc, arr[n + 1])
-        n += 1
+    acc = 0
+    unless block_given?
+
+      if args[0].is_a?(Integer) && args[1].is_a?(Symbol)
+        acc = args[0]
+        my_each_with_index{ |val, i| acc = args[1].to_proc.call(acc, arr[i]) }
+        return acc
+      elsif args[0].is_a?(Symbol)
+        my_each_with_index{ |val, i| acc = args[0].to_proc.call(acc, arr[i]) }
+        return acc
       end
     end
-    acc
+      acc = args[0] ? args[0] : 0
+      my_each_with_index { |val,i| acc = yield(acc, arr[i]) }
+      
+    return acc
   end
 
   def multiply_els(arr)
