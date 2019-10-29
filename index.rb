@@ -122,19 +122,18 @@ module Enumerable
   def my_inject(*args)
     arr = to_a
     acc = 0
-    unless block_given?
-
+    if block_given?
+      acc = args[0] || 0
+      my_each_with_index { |_, i| acc = yield(acc, arr[i]) }
+    else
       if args[0].is_a?(Integer) && args[1].is_a?(Symbol)
         acc = args[0]
         my_each_with_index { |_, i| acc = args[1].to_proc.call(acc, arr[i]) }
       elsif args[0].is_a?(Symbol)
         my_each_with_index { |_, i| acc = args[0].to_proc.call(acc, arr[i]) }
       end
-      acc
     end
-    acc = args[0] || 0
-    my_each_with_index { |_, i| acc = yield(acc, arr[i]) }
-    acc
+    return acc    
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity
