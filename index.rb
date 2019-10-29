@@ -50,11 +50,10 @@ module Enumerable
       end
       return check
     elsif args.empty?
-        my_all? { |obj| obj }
+      my_all? { |obj| obj }
     else
-        my_all?(args[0]) { |obj| obj }
+      my_all?(args[0]) { |obj| obj }
     end
-    
   end
 
   def my_any?(*args)
@@ -70,14 +69,11 @@ module Enumerable
         my_each { |i| check = true if yield(i) == args[0] }
       end
       return check
+    elsif args.empty?
+      my_any? { |obj| obj }
     else
-      if args.empty?
-        my_any? { |obj| obj }
-      else
-        my_any?(args[0]) { |obj| obj }
-      end
-    end
-    
+      my_any?(args[0]) { |obj| obj }
+    end    
   end
 
   def my_none?(*args)
@@ -93,12 +89,10 @@ module Enumerable
         my_each { |i| check = false if yield(i) == args[0] }
       end
       return check
+    elsif args.empty?
+      my_none? { |obj| obj }
     else
-      if args.empty?
-        my_none? { |obj| obj }
-      else
-        my_none?(args[0]) { |obj| obj }
-      end
+      my_none?(args[0]) { |obj| obj }
     end
   end
 
@@ -132,19 +126,16 @@ module Enumerable
 
       if args[0].is_a?(Integer) && args[1].is_a?(Symbol)
         acc = args[0]
-        my_each_with_index{ |val, i| acc = args[1].to_proc.call(acc, arr[i]) }
-        return acc
+        my_each_with_index { |_, i| acc = args[1].to_proc.call(acc, arr[i]) }
       elsif args[0].is_a?(Symbol)
-        my_each_with_index{ |val, i| acc = args[0].to_proc.call(acc, arr[i]) }
-        return acc
+        my_each_with_index { |_, i| acc = args[0].to_proc.call(acc, arr[i]) }
       end
+      return acc
     end
-      acc = args[0] ? args[0] : 0
-      my_each_with_index { |val,i| acc = yield(acc, arr[i]) }
-      
+    acc = args[0] ? args[0] : 0
+    my_each_with_index { |_,i| acc = yield(acc, arr[i]) }
     return acc
   end
-
 end
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
