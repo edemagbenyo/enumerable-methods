@@ -49,12 +49,10 @@ module Enumerable
         my_each { |i| check = false unless yield(i) == args[0] }
       end
       return check
-    else
-      if args.empty?
+    elsif args.empty?
         my_all? { |obj| obj }
-      else
+    else
         my_all?(args[0]) { |obj| obj }
-      end
     end
     
   end
