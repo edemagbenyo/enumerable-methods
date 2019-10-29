@@ -131,7 +131,7 @@ module Enumerable
     elsif args[0].is_a?(Symbol)
       my_each_with_index { |_, i| acc = args[0].to_proc.call(acc, arr[i]) }
     end
-    return acc
+    acc
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity
