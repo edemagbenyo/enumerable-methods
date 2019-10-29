@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/ModuleLength
 module Enumerable
   def my_each
     arr = to_a
@@ -144,7 +147,11 @@ module Enumerable
     return acc
   end
 
-  def multiply_els(arr)
-    arr.my_inject { |i, j| i * j }
-  end
+end
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/ModuleLength
+
+def multiply_els(arr)
+  arr.my_inject { |i, j| i * j }
 end
