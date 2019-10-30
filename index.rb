@@ -61,9 +61,9 @@ module Enumerable
     if block_given?
       if args.empty?
         my_each { |i| check = true if yield(i) }
-      elsif args[0].is_a(Class)
+      elsif args[0].is_a?(Class)
         my_each { |i| check = true if yield(i).class == args[0] }
-      elsif args[0].is_a(Regexp)
+      elsif args[0].is_a?(Regexp)
         my_each { |i| check = true if yield(i).match(args[0]) }
       else
         my_each { |i| check = true if yield(i) == args[0] }
