@@ -81,9 +81,9 @@ module Enumerable
     if block_given?
       if args.empty?
         my_each { |i| check = false if yield(i) }
-      elsif args[0].is_a(Class)
+      elsif args[0].is_a?(Class)
         my_each { |i| check = false if yield(i).class == args[0] }
-      elsif args[0].is_a(Regexp)
+      elsif args[0].is_a?(Regexp)
         my_each { |i| check = false if yield(i).match(args[0]) }
       else
         my_each { |i| check = false if yield(i) == args[0] }
@@ -96,18 +96,20 @@ module Enumerable
     end
   end
 
-  def my_count(*arg)
+  def my_count(*args)
     count = 0
-    unless block_given?
-
-      if arg.empty?
-        my_count { |i| i }
+    if block_given?
+      if args.empty?
+        my_each { |i| count += 1 if yield(i) }
       else
-        my_count { |i| arg[0] == i }
+        my_each { |i| count += 1 if yield(i)==args[0] }
       end
+      return count
+    elsif args.empty?
+      my_count { |i| i }
+    else
+      my_count { |i| args[0] == i }
     end
-    my_each { |i| count += 1 if yield(i) }
-    count
   end
 
   def my_map(&proc)
