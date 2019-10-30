@@ -102,7 +102,7 @@ module Enumerable
       if args.empty?
         my_each { |i| count += 1 if yield(i) }
       else
-        my_each { |i| count += 1 if yield(i)==args[0] }
+        my_each { |i| count += 1 if yield(i) == args[0] }
       end
       return count
     elsif args.empty?
