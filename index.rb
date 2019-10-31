@@ -123,13 +123,12 @@ module Enumerable
 
   def my_inject(*args)
     arr = to_a
-    # ac÷c = 0
     acc = args[0].is_a?(Integer) ? args[0] : first
     if block_given?
       if args.empty?
         my_each_with_index { |val, i| acc = yield(acc, val) if i.positive? }
       else
-        my_each_with_index { |val, i| acc = yield(acc, val) }
+        my_each_with_index { |val, _| acc = yield(acc, val) }
       end
     elsif args[0].is_a?(Integer) && args[1].is_a?(Symbol)
       acc = args[0]
