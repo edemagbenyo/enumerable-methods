@@ -1,7 +1,17 @@
 # Enumerable methods
-
+This project contains a replica of the few methods under the Enumerable Module
 
 # Implementation
+We implemented our own version of the following methods
+* each
+* each_with_index
+* all?
+* any?
+* none?
+* count
+* map
+* inject
+
 
 # Pre-requisites
 1. Ruby installed version
