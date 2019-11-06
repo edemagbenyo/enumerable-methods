@@ -37,7 +37,7 @@ describe Enumerable do
       expect(['Sam', 'John', 12, 56].my_any?(String)).to be_truthy
     end
     it 'returns true if at least one element match the Regexp that passed as argument' do
-      expect(%w(hi hello hola Como estas).my_any?(/(estas)/)).to be_truthy
+      expect(%w[hi hello hola Como estas].my_any?(/(estas)/)).to be_truthy
     end
     it 'returns true if at least one element match the element passed as argument' do
       expect([32, 43, 75, 879, 23].my_any?(23)).to be_truthy
@@ -51,10 +51,10 @@ describe Enumerable do
       expect([16, 78, 12].my_none? { |i| i.class == String }).to be_truthy
     end
     it 'returns true if none of the elements is of the same class as the class passed as argument' do
-      expect(%w(Sam John).my_none?(Numeric)).to be_truthy
+      expect(%w[Sam John].my_none?(Numeric)).to be_truthy
     end
     it 'returns true if none of the elements match the Regexp that passed as argument' do
-      expect(%w(hi hello hola Como estas?).my_none?(/(morning)/)).to be_truthy
+      expect(%w[hi hello hola Como estas?].my_none?(/(morning)/)).to be_truthy
     end
     it 'returns true if none of the elements match the element passed as argument' do
       expect([32, 43, 75, 879].my_none?(23)).to be_truthy
