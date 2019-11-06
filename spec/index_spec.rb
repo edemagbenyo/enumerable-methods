@@ -20,7 +20,7 @@ describe Enumerable do
       expect([1, 2, 3, 4].my_all?(Integer)).to be_truthy
     end
     it 'returns true if all elements match the Regexp that passed as argument' do
-      expect(['hi','hi hello','hi there'].my_all?(/(hi)/) { |i| i }).to be_truthy
+      expect(['hi', 'hi hello', 'hi there'].my_all?(/(hi)/) { |i| i }).to be_truthy
     end
     it 'returns true if all elements match the element passed as argument' do
       expect([1, 1, 1, 1].my_all?(1)).to be_truthy
@@ -37,7 +37,7 @@ describe Enumerable do
       expect(['Sam', 'John', 12, 56].my_any?(String)).to be_truthy
     end
     it 'returns true if at least one element match the Regexp that passed as argument' do
-      expect(['hi hello', 'hola', 'Como estas?',322].my_any?(/(estas)/)).to be_truthy
+      expect(%w('hi hello', 'hola', 'Como estas?').my_any?(/(estas)/)).to be_truthy
     end
     it 'returns true if at least one element match the element passed as argument' do
       expect([32, 43, 75, 879, 23].my_any?(23)).to be_truthy
@@ -54,7 +54,7 @@ describe Enumerable do
       expect(['Sam', 'John'].my_none?(Numeric)).to be_truthy
     end
     it 'returns true if none of the elements match the Regexp that passed as argument' do
-      expect(['hi hello', 'hola', 'Como estas?',90].my_none?(/(morning)/)).to be_truthy
+      expect(%w('hi hello', 'hola', 'Como estas?').my_none?(/(morning)/)).to be_truthy
     end
     it 'returns true if none of the elements match the element passed as argument' do
       expect([32, 43, 75, 879].my_none?(23)).to be_truthy
@@ -65,7 +65,7 @@ describe Enumerable do
   end
   describe '#my_count' do
     it 'returns the numbers of items in enum that passed through the given block' do
-      expect([16, 78, 12, 45].my_count { |i| i > 16}).to eq(2)
+      expect([16, 78, 12, 45].my_count { |i| i > 16 }).to eq(2)
     end
     it 'returns the numbers of items in enum that is equal to the argument' do
       expect([16, 78, 12, 45].my_count(12)).to eq(1)
