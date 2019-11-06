@@ -134,7 +134,7 @@ module Enumerable
       acc = args[0]
       my_each_with_index { |_, i| acc = args[1].to_proc.call(acc, arr[i]) }
     elsif args[0].is_a?(Symbol)
-      my_each_with_index { |_, i| acc = args[0].to_proc.call(acc, arr[i]) }
+      my_each_with_index { |_, i| acc = args[0].to_proc.call(acc, arr[i]) if i.positive? }
     end
     acc
   end
